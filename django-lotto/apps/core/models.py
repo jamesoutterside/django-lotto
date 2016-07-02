@@ -12,7 +12,10 @@ import datetime
 
 class BaseModel(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
-    date_updated = models.DateTimeField(auto_now=True)
+    date_updated = models.DateTimeField(auto_now=True, null=True, blank=True)
+
+    class Meta:
+        abstract = True
 
 @python_2_unicode_compatible
 class Lottery(BaseModel):
@@ -33,7 +36,7 @@ class Lottery(BaseModel):
 
     # admin
     is_active = models.BooleanField(default=False)
-    is_active_from = models.DateTimeField(auto_now_add=True)
+    is_active_from = models.DateTimeField()
     is_closed_from = models.DateTimeField()
 
     objects = LotteryManager()

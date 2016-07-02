@@ -69,3 +69,7 @@ node_modules/
 # bower packages
 django-lotto/assets-src/vendor/
 .sass-cache/
+
+
+.idea/
+*.db

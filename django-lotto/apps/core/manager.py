@@ -8,7 +8,7 @@ class LotteryQuerySet(models.QuerySet):
         return self.filter(is_active=True)
 
     def active_from(self):
-        return self.filter(is_active_from__gte=datetime.datetime.now())
+        return self.filter(is_active_from__lte=datetime.datetime.now())
 
     def not_drawn(self):
         return self.filter(draw_date__isnull=True)
@@ -35,13 +35,16 @@ class LotteryManager(models.Manager):
         return qs
 
     def draw(self, lottery, machine):
+        """
+            Draw the lottery, use specified machine
+        """
         result = []
 
- #       try:
-        ball_machine = getattr(self, 'draw_%s' % machine)
-        balls = ball_machine(lottery=lottery)
-#        except AttributeError:
-#            raise Exception('That machine has not been build yet...')
+        try:
+            ball_machine = getattr(self, 'draw_%s' % machine)
+            balls = ball_machine(lottery=lottery)
+        except AttributeError:
+            raise Exception('That machine has not been build yet...')
 
         while len(result) < lottery.number_of_balls:
             result.append(balls.pop(random.randrange(len(balls))))

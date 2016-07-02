@@ -26,8 +26,8 @@ class LotteryFactory(factory.django.DjangoModelFactory):
 
     name = factory.Sequence(lambda n: "Lotto %03d" % n)
     description = 'Some description'
-    is_active_from = factory.fuzzy.FuzzyDateTime(datetime.datetime.now(pytz.UTC),
-                                                 datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=7))
+    is_active_from = factory.fuzzy.FuzzyDateTime(datetime.datetime.now(pytz.UTC) - datetime.timedelta(days=1),
+                                                 datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=1))
     is_closed_from = factory.fuzzy.FuzzyDateTime(datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=1),
                                                  datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=7))
     number_of_balls = factory.fuzzy.FuzzyInteger(2, 6)

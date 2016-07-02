@@ -27,7 +27,7 @@ class Command(BaseCommand):
         LotteryFactory.create_batch(2, is_active=True)
 
         # create some random active 3 ball lotteries
-        LotteryFactory.create_batch(3, number_of_balls=3, is_active=True)
+        LotteryFactory.create_batch(10, number_of_balls=3, is_active=True)
 
         # create some inactive
         LotteryFactory.create_batch(5, number_of_balls=3, is_active=False)

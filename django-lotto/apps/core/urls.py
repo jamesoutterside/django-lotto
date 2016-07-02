@@ -1,8 +1,7 @@
 from django.conf.urls import *
+import views as core_views
 
-urlpatterns = patterns('core.views',
-    url(r'^$',
-        view='index',
-        name='index'
-    ),
-)
+
+urlpatterns = [
+    url(r'^$',core_views.index,name='index'),
+]
