@@ -9,6 +9,9 @@ from manager import LotteryManager
 
 import random
 import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 class BaseModel(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
@@ -66,6 +69,7 @@ class Lottery(BaseModel):
         # update winners
         winners = Entry.objects.filter(balls=result)
         if winners:
+            logger.info('Winner(s) found for %s' % self.pk)
             winners.update(winner=True)
 
         # update losers

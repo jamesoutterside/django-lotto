@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+
+{% block content %}
+<h2>Sign up</h2>
+<form action="" method="post" class="form">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    {% buttons %}
+        <button type="submit" class="btn btn-primary">
+            Submit
+        </button>
+    {% endbuttons %}
+</form>
+
+<div class="alert alert-info">
+    Dev Note: Simple one step registration with django-registrations no emails or activation required for now.
+</div>
+
+{% endblock %}

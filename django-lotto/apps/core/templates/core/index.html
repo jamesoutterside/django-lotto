@@ -2,7 +2,6 @@
 
 
 {% block content %}
-
 <!-- Main jumbotron for a primary marketing message or call to action -->
 <div class="jumbotron">
     <div class="container">
@@ -12,21 +11,20 @@
     </div>
 </div>
 
-<div class="container">
-    <h2>Available Lotteries</h2>
-    <div class="row">
-        {% for lotto in open_lotteries %}
-        <div class="col-md-4">
-            <h3>{{ lotto.name }}</h3>
-            <p>{{ lotto.description|safe }}</p>
-            <span>Pick: {{lotto.number_of_balls}} numbers from 1 to {{ lotto.max_ball }}</span>
+<h2>Available Lotteries</h2>
+<div class="row">
+    {% for lotto in open_lotteries %}
+    <div class="col-md-4">
+        <h3>{{ lotto.name }}</h3>
+        <p>{{ lotto.description|safe }}</p>
+        <span>Pick: {{lotto.number_of_balls}} numbers from 1 to {{ lotto.max_ball }}</span>
 
 
-            <p><a class="btn btn-success btn-sm" href="#" role="button">Enter &raquo;</a></p>
-        </div>
-        {% endfor %}
+        <p><a class="btn btn-success btn-sm" href="#" role="button">Enter &raquo;</a></p>
     </div>
+    {% endfor %}
 </div>
+
 {% endblock %}
 
 

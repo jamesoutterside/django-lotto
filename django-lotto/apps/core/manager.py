@@ -2,6 +2,9 @@ from django.db import models
 
 import datetime
 import random
+import logging
+
+logger = logging.getLogger(__name__)
 
 class LotteryQuerySet(models.QuerySet):
     def active(self):
@@ -43,8 +46,9 @@ class LotteryManager(models.Manager):
         try:
             ball_machine = getattr(self, 'draw_%s' % machine)
             balls = ball_machine(lottery=lottery)
+            logger.debug('Draw with balls %s' % balls)
         except AttributeError:
-            raise Exception('That machine has not been build yet...')
+            logger.warning('Attempt to draw with not implemented machine')
 
         while len(result) < lottery.number_of_balls:
             result.append(balls.pop(random.randrange(len(balls))))
