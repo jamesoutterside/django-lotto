@@ -11,7 +11,7 @@ virtualenv lotto_env
 cd lotto_env
 source ./bin/activate
 git clone https://github.com/jamesoutterside/django-lotto
-cd django_lotto
+cd django-lotto
 pip install -r requirements/base.txt
 python manage.py migrate
 ```
@@ -21,6 +21,7 @@ To create some initial data:
 ```
 python manage.py create_test_data
 ```
+This will create a set of users, entries and lotteries. Two key users are **super** and **admin**. All users are created with the password - password.  
 
 And then run with runserver:
 

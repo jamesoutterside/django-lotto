@@ -53,6 +53,10 @@ class Lottery(BaseModel):
         verbose_name_plural = 'Lotteries'
         ordering = ('date_created',)
 
+    @property
+    def get_balls(self):
+        return [int(b) for b in self.draw_result.split(',')]
+
     def __str__(self):
         return self.name
 
@@ -61,7 +65,7 @@ class Lottery(BaseModel):
 
     def allows_entry(self):
         now = timezone.now()
-        if self.is_active and self.is_active_from < now and self.is_closed_from > now and not self.draw_date:
+        if self.is_active and self.is_active_from <= now and self.is_closed_from >= now and not self.draw_date:
             return True
         else:
             return False
@@ -114,7 +118,7 @@ class Entry(BaseModel):
 
     @property
     def get_balls(self):
-        return self.balls.split(',')
+        return [int(b) for b in self.balls.split(',')]
 
     def __str__(self):
         return '%s for %s' % (self.entry_user, self.entry_for)

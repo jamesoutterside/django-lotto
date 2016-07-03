@@ -63,7 +63,8 @@ class LotteryManager(models.Manager):
         while len(result) < lottery.number_of_balls:
             result.append(balls.pop(random.randrange(len(balls))))
 
-        return ','.join([str(s) for s in sorted(result)])
+        sorted_result = sorted(result)
+        return ','.join([str(s) for s in sorted_result])
 
     def draw_arthur(self, lottery):
         balls = range(1, int(lottery.max_ball))
@@ -79,6 +80,6 @@ class LotteryManager(models.Manager):
         entry = lottery.entry_set.filter().order_by('?').first()
 
         if entry:
-            return entry.balls.split(',')
+            return entry.get_balls
         else:
             return []

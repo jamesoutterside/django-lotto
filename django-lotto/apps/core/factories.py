@@ -60,6 +60,7 @@ class EntryFactory(factory.django.DjangoModelFactory):
         django_get_or_create = ('entry_user','entry_for') # hold up unique constraint
 
     # random user who is not staff
+    entry_for = factory.Iterator(models.Lottery.objects.filter(is_active=True))
     entry_user = factory.Iterator(models.User.objects.filter(is_staff=False))
 
     # get a lucky dip!

@@ -24,7 +24,7 @@
     {% for lotto in open_lotteries %}
     <div class="col-md-4">
 
-        <h4>{{ lotto.name }}
+        <h4><a href="{{ lotto.get_absolute_url }}">{{ lotto.name }}</a>
             <div class=" pull-right">
             <span class="label label-primary">{{ lotto.number_of_balls }} ball</span>
             <span class="label label-primary ">1 - {{ lotto.max_ball }}</span>

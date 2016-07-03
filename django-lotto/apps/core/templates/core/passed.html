@@ -16,14 +16,27 @@
     {% for lotto in passed_lotteries %}
     <div class="col-md-4">
 
-        <h4>{{ lotto.name }}
+        <h4><a href="{{ lotto.get_absolute_url }}">{{ lotto.name }}</a>
             <div class=" pull-right">
             <span class="label label-primary">{{lotto.number_of_balls}} ball</span>
             <span class="label label-primary ">1 - {{ lotto.max_ball }}</span>
                </div>
         </h4>
         <small><strong>Closed: {{ lotto.is_closed_from|naturalday }}</strong></small>
-        <p>{{ lotto.description|safe|truncatewords_html:20 }}</p>
+        <p>
+            {{ lotto.description|safe|truncatewords_html:20 }}
+            <br/>
+            Prize: {{ lotto.prize }}
+        </p>
+        {% if lotto.draw_date %}
+            Result:
+            <small>
+                {% for b in lotto.get_balls %}
+                    <span class="label label-success">{{b}}</span>
+                {% endfor %}
+                {{lotto.draw_date|naturalday}} by {{lotto.draw_machine}}</small>
+            </small><br/><br/>
+        {% endif %}
 
         <p><a class="btn btn-success btn-sm" href="{{ lotto.get_absolute_url }}" role="button">View</a></p>
         <hr>
