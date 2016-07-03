@@ -16,6 +16,8 @@ class LotteryQuerySet(models.QuerySet):
     def not_drawn(self):
         return self.filter(draw_date__isnull=True)
 
+    def is_drawn(self):
+        return self.exclude(draw_date__isnull=True)
 
 class LotteryManager(models.Manager):
     def get_queryset(self):
@@ -36,6 +38,14 @@ class LotteryManager(models.Manager):
         qs = qs.not_drawn()
 
         return qs
+
+
+    def get_active_drawn(self):
+        qs = self.get_active()
+        qs = qs.is_drawn()
+
+        return qs
+
 
     def draw(self, lottery, machine):
         """

@@ -39,13 +39,16 @@ class EntryForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(EntryForm, self).clean()
+
+        # get all the balls, via BALL_KEY
         balls_and_values = {}
         for i in [f for f in self.fields if f[:5] == BALL_KEY]:
             value = cleaned_data.get(i)
             if value:
                 balls_and_values[i] = value
 
-        cleaned_data['validated_balls'] = ','.join([str(i) for i in balls_and_values.values()])
+        # set validated balls for view
+        cleaned_data['validated_balls'] = ','.join([str(i) for i in sorted(balls_and_values.values())])
 
         # check for duplicates
         if len(balls_and_values.values()) != len(set(balls_and_values.values())):

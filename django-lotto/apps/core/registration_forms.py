@@ -7,7 +7,7 @@ User = get_user_model()
 
 class RegistrationFormExtra(RegistrationForm):
     """
-    Subclass of ``RegistrationForm`` to add in extra fields from the user model
+        Subclass of ``RegistrationForm`` to add in extra fields from the user model
     """
 
     class Meta(UserCreationForm.Meta):

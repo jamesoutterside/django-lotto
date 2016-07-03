@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h2>Your Entries Lotteries
+    <div class="pull-right">
+        <a class="btn btn-info btn-xs" href="{% url 'index'%}">View Open</a>
+        <a class="btn btn-success btn-xs" href="{% url 'passed' %}">View Passed</a>
+    </div>
+</h2>
+<hr/>
+<div class="row">
+    {% for entry in user_entries %}
+    <div class="col-md-4">
+
+        <h4>{{ entry.entry_for.name }}
+            <div class=" pull-right">
+            <span class="label label-primary">{{entry.entry_for.number_of_balls}} ball</span>
+            <span class="label label-primary ">1 - {{ entry.entry_for.max_ball }}</span>
+               </div>
+        </h4>
+        <p>{{ entry.entry_for.description|safe|truncatewords_html:20 }}</p>
+
+        Your Balls:
+        {% for b in  entry.get_balls %}
+            <span class="label label-primary">{{b}}</span>
+        {% endfor %}
+        <br/>
+        <span class="label label-info ">{{ entry.winner|yesno:'Winner!,Sorry - Better luck next time!, Not drawn' }}</span>
+        <hr>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+

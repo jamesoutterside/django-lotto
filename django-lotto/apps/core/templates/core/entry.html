@@ -39,6 +39,8 @@
                 {% for b in  entry.get_balls %}
                     <span class="label label-primary">{{b}}</span>
                 {% endfor %}
+
+                <span class="label label-info ">{{ entry.winner|yesno:'Winner!,Sorry - Better luck next time!, Not drawn' }}</span>
             </div>
         {% endif %}
     </div>

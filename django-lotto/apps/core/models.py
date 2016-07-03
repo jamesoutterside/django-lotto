@@ -39,11 +39,12 @@ class Lottery(BaseModel):
     # draw details
     draw_result = models.CommaSeparatedIntegerField(max_length=255, null=True, blank=True)
     draw_date = models.DateTimeField(null=True, blank=True)
+    draw_machine = models.CharField(max_length=255, null=True, blank=True)
 
     # admin
-    is_active = models.BooleanField(default=False)
-    is_active_from = models.DateTimeField()
-    is_closed_from = models.DateTimeField()
+    is_active = models.BooleanField(default=False, help_text='Display on site')
+    is_active_from = models.DateTimeField(help_text='When to display on site from')
+    is_closed_from = models.DateTimeField(help_text='When entries are closed from')
 
     objects = LotteryManager()
 
@@ -59,12 +60,15 @@ class Lottery(BaseModel):
 
     def allows_entry(self):
         now = timezone.now()
-        if self.is_active and self.is_active_from < now and self.is_closed_from > now:
+        if self.is_active and self.is_active_from < now and self.is_closed_from > now and not self.draw_date:
             return True
         else:
             return False
 
     def pick_lucky_dip(self):
+        """
+            Do a lucky dip, for testing but could be front end
+        """
         balls = range(1, int(self.max_ball))
         lucky_dip = []
 
@@ -74,9 +78,13 @@ class Lottery(BaseModel):
         return ','.join([str(s) for s in sorted(lucky_dip)])
 
     def do_draw(self, machine='arthur'):
+        """
+            Draw the lottery and set relevent fields
+        """
         result = Lottery.objects.draw(lottery=self, machine=machine)
         self.draw_result = result
         self.draw_date = datetime.datetime.now()
+        self.draw_machine = machine
         self.save()
 
         # update winners

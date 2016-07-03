@@ -1,6 +1,8 @@
 from django.core.management.base import BaseCommand, CommandError
+from django.contrib.auth.models import Permission
 from core.models import Lottery
 from core.factories import UserFactory, LotteryFactory, EntryFactory
+
 
 class Command(BaseCommand):
     help = 'Creates some test data for the site'
@@ -14,7 +16,10 @@ class Command(BaseCommand):
         UserFactory.create(username='super', is_superuser=True, is_staff=True)
         self.stdout.write(self.style.SUCCESS('Superuser username: super'))
 
-        UserFactory.create(username='admin', is_superuser=False, is_staff=True)
+        staff_user = UserFactory.create(username='admin', is_superuser=False, is_staff=True)
+        # give the admin user everything for the purpose of testing
+        staff_user.user_permissions.add(*list(Permission.objects.all()))
+
         self.stdout.write(self.style.SUCCESS('Staff username: Admin'))
 
         # create 100 standard users
@@ -27,7 +32,9 @@ class Command(BaseCommand):
         LotteryFactory.create_batch(2, is_active=True)
 
         # create some random active 3 ball lotteries
-        LotteryFactory.create_batch(10, number_of_balls=3, is_active=True)
+        LotteryFactory.create_batch(5, number_of_balls=3, is_active=True)
+        # create some random active 6 ball lotteries
+        LotteryFactory.create_batch(5, number_of_balls=6, is_active=True)
 
         # create some inactive
         LotteryFactory.create_batch(5, number_of_balls=3, is_active=False)

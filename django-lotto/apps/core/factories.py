@@ -1,3 +1,9 @@
+"""
+    Factories used to create initial testing data and data for unit testing.
+
+    For the 3 main Models - Entry/User and Lottery
+"""
+
 from django.template.defaultfilters import slugify
 
 import factory
@@ -6,6 +12,7 @@ import datetime
 import pytz
 
 import models
+
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -32,10 +39,15 @@ class LotteryFactory(factory.django.DjangoModelFactory):
                   "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla " \
                   "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa " \
                   "qui officia deserunt mollit anim id est laborum." # since django removed webdesign in 19 :/
+    prize = 'Car'
+
+    # random dates
     is_active_from = factory.fuzzy.FuzzyDateTime(datetime.datetime.now(pytz.UTC) - datetime.timedelta(days=1),
                                                  datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=1))
     is_closed_from = factory.fuzzy.FuzzyDateTime(datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=1),
                                                  datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=7))
+
+    # random numbers/balls
     number_of_balls = factory.fuzzy.FuzzyInteger(2, 6)
     max_ball = factory.fuzzy.FuzzyInteger(10, 49)
 
@@ -46,6 +58,9 @@ class EntryFactory(factory.django.DjangoModelFactory):
         model = models.Entry
         django_get_or_create = ('entry_user','entry_for') # hold up unique constraint
 
+    # random user who is not staff
     entry_user = factory.Iterator(models.User.objects.filter(is_staff=False))
+
+    # get a lucky dip!
     balls = factory.lazy_attribute(lambda o: o.entry_for.pick_lucky_dip())
 
