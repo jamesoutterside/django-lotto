@@ -55,7 +55,6 @@ venv
 *.iml
 *.iws
 
-django-lotto/settings/local.py
 django-lotto/settings/production.py
 
 # collect static output directory
