@@ -1,11 +1,10 @@
-from __future__ import absolute_import
 from django.contrib import admin
 from django.contrib.admin.sites import site
 from django.utils.html import escape
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.admin.widgets import ForeignKeyRawIdWidget
 from django.core.urlresolvers import reverse
-from .models import Lottery, Entry, User
+from models import Lottery, Entry, User
 
 class ReadOnlyTabularInline(admin.TabularInline):
     show_change_link = True

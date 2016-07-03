@@ -1,12 +1,11 @@
-from __future__ import absolute_import
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 
-from .models import Lottery, Entry
-from .forms import EntryForm, BALL_KEY
+from models import Lottery, Entry
+from forms import EntryForm, BALL_KEY
 
 
 def index(request):

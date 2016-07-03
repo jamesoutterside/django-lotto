@@ -1,5 +1,7 @@
 # Django-lotto
 
+**Requires - Django 1.9.*, pyton 2.7**
+
 ## Install & setup 
 
 To install run the following: 
@@ -8,6 +10,7 @@ To install run the following:
 virtualenv lotto_env
 cd lotto_env
 source ./bin/activate
+git clone https://github.com/jamesoutterside/django-lotto
 cd django_lotto
 pip install -r requirements/base.txt
 python manage.py migrate

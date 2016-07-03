@@ -3,7 +3,6 @@
 
     For the 3 main Models - Entry/User and Lottery
 """
-from __future__ import absolute_import
 
 from django.template.defaultfilters import slugify
 
@@ -12,7 +11,7 @@ import factory.fuzzy
 import datetime
 import pytz
 
-from . import models
+import models
 
 
 class UserFactory(factory.django.DjangoModelFactory):

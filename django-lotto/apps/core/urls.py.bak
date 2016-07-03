@@ -1,7 +1,6 @@
-from __future__ import absolute_import
 from django.conf.urls import *
-from . import views as core_views
-from . import admin_views
+import views as core_views
+import admin_views
 
 
 urlpatterns = [
