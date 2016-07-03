@@ -1,6 +1,8 @@
 # Django-lotto
 
-**Requires - Django 1.9.*, pyton 2.7**
+[Full list of requirements](requirements/base.txt)
+
+**Tested with - Django 1.9.7, pyton 2.7**
 
 ## Install & setup 
 
