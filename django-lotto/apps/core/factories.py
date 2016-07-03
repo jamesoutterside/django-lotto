@@ -25,7 +25,13 @@ class LotteryFactory(factory.django.DjangoModelFactory):
         model = models.Lottery
 
     name = factory.Sequence(lambda n: "Lotto %03d" % n)
-    description = 'Some description'
+    description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do " \
+                  "eiusmod tempor incididunt ut labore et dolore magna aliqua." \
+                  " Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris " \
+                  "nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in " \
+                  "reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla " \
+                  "pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa " \
+                  "qui officia deserunt mollit anim id est laborum." # since django removed webdesign in 19 :/
     is_active_from = factory.fuzzy.FuzzyDateTime(datetime.datetime.now(pytz.UTC) - datetime.timedelta(days=1),
                                                  datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=1))
     is_closed_from = factory.fuzzy.FuzzyDateTime(datetime.datetime.now(pytz.UTC) + datetime.timedelta(days=1),

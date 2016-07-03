@@ -3,6 +3,9 @@
 
 {% block content %}
 <h2>Login</h2>
+<div class="alert alert-info">
+    Please login below, or <a href="{% url 'registration_register' %}?next={{next}}">signup</a>
+</div>
 <form action="" method="post" class="form">
     {% csrf_token %}
     {% bootstrap_form form %}

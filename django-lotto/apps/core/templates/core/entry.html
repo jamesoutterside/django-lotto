@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% load humanize %}
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+        <h2>{{ lottery.name }}</h2>
+
+        <p>{{ lottery.description|safe }}</p>
+
+        <hr>
+
+
+        <h2>Your ticket!</h2>
+
+        {% if not entry %}
+            {% if form %}
+                <div class="alert alert-info">
+                    To enter please select <strong>{{ lottery.number_of_balls }} balls</strong>
+                    between <strong>1 and {{ lottery.max_ball }}</strong>.
+                </div>
+                <form action="" method="post" class="form">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    {% buttons %}
+                    <button type="submit" class="btn btn-primary">
+                        Submit
+                    </button>
+                    {% endbuttons %}
+                </form>
+            {% else %}
+                <p>This lottery is now closed and you didn't enter a ticket.</p>
+            {% endif %}
+        {% else %}
+            <div class="alert alert-success">
+                You entered this lottery - {{ entry.date_created|naturaltime }}
+                <hr/>
+                {% for b in  entry.get_balls %}
+                    <span class="label label-primary">{{b}}</span>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+

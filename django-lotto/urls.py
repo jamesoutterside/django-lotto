@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.conf import settings
 
 from registration.backends.simple.views import RegistrationView
-from apps.core.forms import RegistrationFormExtra
+from apps.core.registration_forms import RegistrationFormExtra
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

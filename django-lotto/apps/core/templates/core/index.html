@@ -7,20 +7,31 @@
     <div class="container">
         <h1>Hello!</h1>
 
-        <p>This is a template for a simple lotto site build with Django.</p>
+        <p>This is a demo lotto site built with Django.</p>
     </div>
 </div>
 
-<h2>Available Lotteries</h2>
+<h2>Open Lotteries
+    <div class="pull-right">
+        <a class="btn btn-success btn-xs" href="#">View Past</a>
+        <a class="btn btn-warning btn-xs" href="#">View Your Entries</a>
+    </div>
+</h2>
+<hr/>
 <div class="row">
     {% for lotto in open_lotteries %}
     <div class="col-md-4">
-        <h3>{{ lotto.name }}</h3>
-        <p>{{ lotto.description|safe }}</p>
-        <span>Pick: {{lotto.number_of_balls}} numbers from 1 to {{ lotto.max_ball }}</span>
 
+        <h4>{{ lotto.name }}
+            <div class=" pull-right">
+            <span class="label label-primary">{{lotto.number_of_balls}} ball</span>
+            <span class="label label-primary ">1 - {{ lotto.max_ball }}</span>
+               </div>
+        </h4>
+        <p>{{ lotto.description|safe|truncatewords_html:20 }}</p>
 
-        <p><a class="btn btn-success btn-sm" href="#" role="button">Enter &raquo;</a></p>
+        <p><a class="btn btn-success btn-sm" href="{{ lotto.get_absolute_url }}" role="button">View</a></p>
+        <hr>
     </div>
     {% endfor %}
 </div>

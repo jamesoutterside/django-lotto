@@ -3,7 +3,9 @@ from django.utils.encoding import python_2_unicode_compatible
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.utils import timezone
 
 from manager import LotteryManager
 
@@ -19,6 +21,7 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
+
 
 @python_2_unicode_compatible
 class Lottery(BaseModel):
@@ -50,6 +53,16 @@ class Lottery(BaseModel):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('entry', kwargs={'lottery_id':self.pk})
+
+    def allows_entry(self):
+        now = timezone.now()
+        if self.is_active and self.is_active_from < now and self.is_closed_from > now:
+            return True
+        else:
+            return False
 
     def pick_lucky_dip(self):
         balls = range(1, int(self.max_ball))
@@ -89,6 +102,10 @@ class Entry(BaseModel):
     class Meta:
         unique_together = ('entry_for','entry_user')
         verbose_name_plural = 'Entries'
+
+    @property
+    def get_balls(self):
+        return self.balls.split(',')
 
     def __str__(self):
         return '%s for %s' % (self.entry_user, self.entry_for)
